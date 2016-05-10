@@ -3,6 +3,9 @@ import urllib.request, urllib.error, urllib.parse
 import xml.dom.minidom
 import cgi, cgitb
 
+def ups_call(id):
+    return (['UPS API IS UNDER CONSTRUCTION'])
+
 def usps_call(id):
     #URI for API
     url = 'http://production.shippingapis.com/Shipping.dll?API=TrackV2&'
