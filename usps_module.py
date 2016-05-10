@@ -1,10 +1,7 @@
-#!/usr/bin/env python3
 from xml.etree import ElementTree as ET
 import urllib.request, urllib.error, urllib.parse
 import xml.dom.minidom
 import cgi, cgitb
-
-id="9534612156126123269099" # Package sent to Alaska
 
 def usps_call(id):
     #URI for API
@@ -24,7 +21,6 @@ def usps_call(id):
     req.add_header("Accept", "*/*")
     req.add_header("Content-Type","application/xml; charset=utf-8")
 
-
     #create the call to the API
     response = urllib.request.urlopen(req)
 
@@ -34,16 +30,17 @@ def usps_call(id):
 
     #obtain the value from the TrackSummary tag
     summary = dom.getElementsByTagName("TrackSummary")
+    details_list=[]
     for each in summary:
-        print ("%s\n" % summary[0].firstChild.nodeValue)
+        statement = ("".join(summary[0].firstChild.nodeValue))
+        details_list.append(statement)
 
     #obtain the value(s) from the TrackDetail tag(s)
     details = dom.getElementsByTagName("TrackDetail")
-    #details_list = []
     for detail in details:
-    #detail_list += __getText(detail.childNodes)
-    #return detail_list
-        print ("%s\n" % __getText(detail.childNodes))
+        statement =  __getText(detail.childNodes)
+        details_list.append(statement)
+    return details_list
 
 #function to parse text from nodes
 def __getText(nodelist):
@@ -52,9 +49,3 @@ def __getText(nodelist):
             if node.nodeType == node.TEXT_NODE:
                 rc.append(node.data)
         return ''.join(rc)
-
-try:   # NEW
-    print("Content-type: text/html\n\n")   # say generating html
-    main()
-except:
-    cgi.print_exception()                 # catch and print errors
