@@ -3,10 +3,23 @@ import urllib.request, urllib.error, urllib.parse
 import xml.dom.minidom
 import cgi, cgitb
 
-def ups_call(id):
+
+def api_call(id, carrier):
+  if carrier == "USPS":
+    tracking_data = __usps_call(id)
+  elif carrier == "UPS":
+    tracking_data = __ups_call(id)
+  elif carrier == "FedEx":
+    tracking_data = __fedex_call(id)
+  return (tracking_data)
+
+def __ups_call(id):
     return (['UPS API IS UNDER CONSTRUCTION'])
 
-def usps_call(id):
+def __fedex_call(id):
+    return (['FEDEX API IS UNDER CONSTRUCTION'])
+
+def __usps_call(id):
     #URI for API
     url = 'http://production.shippingapis.com/Shipping.dll?API=TrackV2&'
     #XML data to wrap around tracking id

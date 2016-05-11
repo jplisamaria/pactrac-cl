@@ -1,11 +1,17 @@
-from APIS_module import *
+from APIs_module import *
 from io_module import *
 
+def get_carrier(selection):
+  if selection == "1":
+    carrier = "USPS"
+  elif selection == "2":
+    carrier = "UPS"
+  elif selection == "3":
+    carrier = "FedEx"
+  return carrier
+
 def print_data(id, carrier):
-  if carrier == "USPS":
-    tracking_data = usps_call(id)
-  elif carrier == "UPS":
-    tracking_data = ups_call(id)
+  tracking_data = api_call(id, carrier)
   print ("%s package %s" %(carrier, id))
   print ("-" * len("%s package %s" %(carrier, id)) )
   for detail in tracking_data:
